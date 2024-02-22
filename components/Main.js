@@ -9,7 +9,7 @@ import {auth} from '../firebase'
 import { getDefaultMiddleware } from '@reduxjs/toolkit';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
-import { fetchUser, fetchUserPosts } from '../redux/actions/index';
+import { fetchUser, fetchUserPosts, fetchUserFollowing , clearData} from '../redux/actions/index';
 const EmptyScreen = () => {
     return (null)
 }
@@ -19,8 +19,10 @@ const Tab = createMaterialBottomTabNavigator();
 export class Main extends Component {
    
     componentDidMount() {
+        this.props.clearData();
         this.props.fetchUser();
         this.props.fetchUserPosts();
+        this.props.fetchUserFollowing();
     }
     render() {
         const { currentUser } = this.props;
@@ -75,6 +77,6 @@ export class Main extends Component {
 const mapStateToProps = (store) => ({
     currentUser: store.userState.currentUser
 })
-const mapDispatchProps = (dispatch) => bindActionCreators({fetchUser, fetchUserPosts}, dispatch);
+const mapDispatchProps = (dispatch) => bindActionCreators({fetchUser, fetchUserPosts, fetchUserFollowing,clearData}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchProps)(Main);
